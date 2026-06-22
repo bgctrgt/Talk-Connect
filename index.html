@@ -6,75 +6,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: linear-gradient(135deg, #003A8F, #00A0DC);
-      color: white;
+      font-family: "Siemens Sans", "Segoe UI", Arial, sans-serif;
+      background: #000028;
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
       text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Siemens petrol gradient overlay */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(0,155,155,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 80%, rgba(0,95,135,0.1) 0%, transparent 50%);
+      pointer-events: none;
     }
 
     .container {
-      max-width: 600px;
-      padding: 40px;
+      max-width: 620px;
+      padding: 50px 40px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease-out both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .badge {
-      font-size: 18px;
-      letter-spacing: 2px;
-      opacity: 0.7;
-      margin-bottom: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #009b9b;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease-out 0.2s both;
     }
 
     h1 {
-      font-size: 42px;
-      margin-bottom: 20px;
+      font-size: 38px;
+      font-weight: 300;
+      margin-bottom: 16px;
+      line-height: 1.2;
+      animation: fadeUp 0.8s ease-out 0.4s both;
     }
 
     p {
-      font-size: 20px;
-      opacity: 0.9;
-      margin-bottom: 30px;
+      font-size: 18px;
+      opacity: 0.75;
+      margin-bottom: 32px;
+      line-height: 1.6;
+      animation: fadeUp 0.8s ease-out 0.6s both;
     }
 
     .answer {
-      font-size: 28px;
-      font-weight: bold;
-      background: rgba(255,255,255,0.15);
-      padding: 15px 25px;
-      border-radius: 10px;
+      font-size: 24px;
+      font-weight: 600;
+      background: linear-gradient(135deg, rgba(0,155,155,0.2), rgba(0,95,135,0.2));
+      border: 1px solid rgba(0,155,155,0.4);
+      padding: 18px 32px;
+      border-radius: 8px;
       display: inline-block;
+      animation: fadeUp 0.8s ease-out 0.8s both, glowPulse 3s ease-in-out 2s infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(0,155,155,0.1); }
+      50% { box-shadow: 0 0 30px rgba(0,155,155,0.3), 0 0 60px rgba(0,155,155,0.1); }
     }
 
     .icon {
-      font-size: 50px;
+      font-size: 48px;
       margin-bottom: 20px;
+      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s both;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+      to { opacity: 1; transform: scale(1) rotate(0deg); }
     }
 
     .footer {
-      margin-top: 40px;
-      font-size: 14px;
-      opacity: 0.6;
+      margin-top: 48px;
+      font-size: 13px;
+      opacity: 0.4;
+      letter-spacing: 0.5px;
+      animation: fadeUp 0.8s ease-out 1s both;
+    }
+
+    /* Hidden hint animation - subtle particles for those who notice */
+    .hint-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #009b9b;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      animation: floatUp 4s ease-in infinite;
+    }
+
+    .hint-particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .hint-particle:nth-child(2) { left: 25%; animation-delay: 1.2s; }
+    .hint-particle:nth-child(3) { left: 50%; animation-delay: 2.4s; }
+    .hint-particle:nth-child(4) { left: 75%; animation-delay: 0.8s; }
+    .hint-particle:nth-child(5) { left: 90%; animation-delay: 2s; }
+
+    @keyframes floatUp {
+      0% { bottom: -10px; opacity: 0; transform: scale(0.5); }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.3; }
+      100% { bottom: 100vh; opacity: 0; transform: scale(1.2); }
+    }
+
+    /* Siemens-style top accent line */
+    .accent-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #009b9b, #00bedc, #009b9b, transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
     }
   </style>
 </head>
 
 <body>
 
+  <div class="accent-line"></div>
+
+  <!-- Hidden hint particles - reward for the observant -->
+  <div class="hint-particle"></div>
+  <div class="hint-particle"></div>
+  <div class="hint-particle"></div>
+  <div class="hint-particle"></div>
+  <div class="hint-particle"></div>
+
   <div class="container">
     
-    <div class="icon">✅</div>
+    <div class="icon">🔍</div>
 
-    <div class="badge">CONGRATULATIONS</div>
+    <div class="badge">Congratulations</div>
 
     <h1>You found the hidden answer</h1>
 
     <p>
-      Great observation and attention to detail.
+      Great observation and attention to detail.<br>
       The correct answer is:
     </p>
 
@@ -83,7 +178,7 @@
     </div>
 
     <div class="footer">
-      FT Türkiye AI Board • AI Program
+      FT Türkiye AI Board &bull; AI Program
     </div>
 
   </div>
